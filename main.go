@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"adtya.xyz/ggit/commands"
 )
 
 func main() {
@@ -13,13 +15,9 @@ func main() {
 	}
 	switch args[0] {
 	case "init":
-		Init(args[1:])
+		commands.Init(args[1:])
 	default:
 		fmt.Printf("%s is an invalid command\n", args[0])
 		os.Exit(1)
 	}
-}
-
-func Init(args []string) {
-	fmt.Println("Hello, World!")
 }
