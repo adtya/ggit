@@ -16,6 +16,8 @@ func main() {
 	switch args[0] {
 	case "init":
 		commands.Init(args[1:])
+	case "hash-object":
+		commands.HashObject(args[1:])
 	default:
 		fmt.Printf("%s is an invalid command\n", args[0])
 		os.Exit(1)
