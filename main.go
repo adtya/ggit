@@ -10,7 +10,7 @@ import (
 func main() {
 	args := os.Args[1:]
 	if len(args) == 0 {
-		fmt.Printf("Usage: %s <command>\n", os.Args[0])
+		fmt.Println("Usage: ggit <command>")
 		os.Exit(1)
 	}
 	switch args[0] {

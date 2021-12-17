@@ -10,9 +10,9 @@ import (
 
 var OBJECT_DIR string = ".ggit/objects"
 
-func HashObject(args []string) string {
+func HashObject(args []string) {
 	if len(args) == 0 {
-		fmt.Println("hash-object requires a file name")
+		fmt.Println("hash-object command requires a file name")
 		os.Exit(1)
 	}
 
@@ -20,7 +20,7 @@ func HashObject(args []string) string {
 	oid := hash(fileContent)
 	objectPath := filepath.Join(OBJECT_DIR, oid)
 	write(objectPath, fileContent)
-	return oid
+	fmt.Println(oid)
 }
 
 func open(fileName string) []byte {
