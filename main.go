@@ -26,7 +26,7 @@ func main() {
 	case "cat-file":
 		str, err = commands.CatFile(args[1:])
 	default:
-		fmt.Printf("%s is an invalid command\n", args[0])
+		fmt.Printf("%s is not a valid command\n", args[0])
 		os.Exit(1)
 	}
 
