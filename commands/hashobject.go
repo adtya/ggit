@@ -2,6 +2,7 @@ package commands
 
 import (
 	"crypto/sha256"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -10,17 +11,25 @@ import (
 
 var OBJECT_DIR string = ".ggit/objects"
 
-func HashObject(args []string) {
+func HashObject(args []string) (string, error) {
 	if len(args) == 0 {
-		fmt.Println("hash-object command requires a file name")
-		os.Exit(1)
+		return "", errors.New("hash-object command requires a file name")
 	}
 
 	fileContent := open(args[0])
 	oid := hash(fileContent)
 	objectPath := filepath.Join(OBJECT_DIR, oid)
 	write(objectPath, fileContent)
-	fmt.Println(oid)
+	return fmt.Sprintf("%s\n", oid), nil
+}
+
+func CatFile(args []string) (string, error) {
+	if len(args) == 0 {
+		return "", errors.New("cat-file required the object id")
+	}
+	objectPath := filepath.Join(OBJECT_DIR, args[0])
+	fileContent := open(objectPath)
+	return fmt.Sprint(string(fileContent[:])), nil
 }
 
 func open(fileName string) []byte {
@@ -36,7 +45,6 @@ func open(fileName string) []byte {
 func hash(fileContent []byte) string {
 	sum := sha256.Sum256(fileContent)
 	return fmt.Sprintf("%x", sum)
-
 }
 
 func write(objectPath string, fileContent []byte) {

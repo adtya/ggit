@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"adtya.xyz/ggit/commands"
@@ -13,13 +14,24 @@ func main() {
 		fmt.Println("Usage: ggit <command>")
 		os.Exit(1)
 	}
+
+	var str string
+	var err error
+
 	switch args[0] {
 	case "init":
-		commands.Init(args[1:])
+		str = commands.Init(args[1:])
 	case "hash-object":
-		commands.HashObject(args[1:])
+		str, err = commands.HashObject(args[1:])
+	case "cat-file":
+		str, err = commands.CatFile(args[1:])
 	default:
 		fmt.Printf("%s is an invalid command\n", args[0])
 		os.Exit(1)
 	}
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(str)
 }
